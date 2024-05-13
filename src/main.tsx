@@ -1,25 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-// import App from './App.tsx'
-import './index.css'
+
+import { PlasmicRootProvider } from '@plasmicapp/react-web'
 
 import { NavigationBar } from './components/NavigationBar'
+import Homepage from './components/Homepage'
 
-// const domNode = document.getElementById('navigation')
 
-declare global {
-  interface Window {
-    customComponents: {
-      render: {
-        navigationBar: (targetDivId: string) => void
-      }
-    }
-  }
-}
 
-window.customComponents = {
+const customComponents = {
   render: {
-    navigationBar: (targetDivId) => {
+    homePage: (targetDivId: string) => {
+      ReactDOM.createRoot(document.getElementById(targetDivId)!).render(
+        <React.StrictMode>
+          <PlasmicRootProvider>
+            <Homepage />
+          </ PlasmicRootProvider>
+        </React.StrictMode>,
+      )
+    },
+    navigationBar: (targetDivId: string) => {
       ReactDOM.createRoot(document.getElementById(targetDivId)!).render(
         <React.StrictMode>
           <NavigationBar />
@@ -29,8 +29,4 @@ window.customComponents = {
   }
 }
 
-// ReactDOM.createRoot(domNode!).render(
-//   <React.StrictMode>
-//     <NavigationBar />
-//   </React.StrictMode>,
-// )
+export default customComponents;
