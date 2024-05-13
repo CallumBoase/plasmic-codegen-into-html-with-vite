@@ -72,15 +72,24 @@ export type PlasmicSomeComponent__VariantsArgs = {};
 type VariantPropType = keyof PlasmicSomeComponent__VariantsArgs;
 export const PlasmicSomeComponent__VariantProps = new Array<VariantPropType>();
 
-export type PlasmicSomeComponent__ArgsType = {};
+export type PlasmicSomeComponent__ArgsType = {
+  count?: number;
+  onCountChange?: (val: string) => void;
+};
 type ArgPropType = keyof PlasmicSomeComponent__ArgsType;
-export const PlasmicSomeComponent__ArgProps = new Array<ArgPropType>();
+export const PlasmicSomeComponent__ArgProps = new Array<ArgPropType>(
+  "count",
+  "onCountChange"
+);
 
 export type PlasmicSomeComponent__OverridesType = {
   root?: Flex__<"div">;
+  text?: Flex__<"div">;
 };
 
 export interface DefaultSomeComponentProps {
+  count?: number;
+  onCountChange?: (val: string) => void;
   className?: string;
 }
 
@@ -107,6 +116,26 @@ function PlasmicSomeComponent__RenderFunc(props: {
 
   const currentUser = useCurrentUser?.() || {};
 
+  const stateSpecs: Parameters<typeof useDollarState>[0] = React.useMemo(
+    () => [
+      {
+        path: "count",
+        type: "writable",
+        variableType: "number",
+
+        valueProp: "count",
+        onChangeProp: "onCountChange"
+      }
+    ],
+    [$props, $ctx, $refs]
+  );
+  const $state = useDollarState(stateSpecs, {
+    $props,
+    $ctx,
+    $queries: {},
+    $refs
+  });
+
   return (
     <div
       data-plasmic-name={"root"}
@@ -122,23 +151,115 @@ function PlasmicSomeComponent__RenderFunc(props: {
         sty.root
       )}
     >
-      <Button className={classNames("__wab_instance", sty.button__t4CkB)} />
+      <Button
+        className={classNames("__wab_instance", sty.button__xYrMx)}
+        onClick={async event => {
+          const $steps = {};
 
-      <Button className={classNames("__wab_instance", sty.button__gPs4)} />
+          $steps["updateCount"] = true
+            ? (() => {
+                const actionArgs = {
+                  variable: {
+                    objRoot: $state,
+                    variablePath: ["count"]
+                  },
+                  operation: 2
+                };
+                return (({ variable, value, startIndex, deleteCount }) => {
+                  if (!variable) {
+                    return;
+                  }
+                  const { objRoot, variablePath } = variable;
 
-      <Button className={classNames("__wab_instance", sty.button__g9TQv)} />
+                  const oldValue = $stateGet(objRoot, variablePath);
+                  $stateSet(objRoot, variablePath, oldValue + 1);
+                  return oldValue + 1;
+                })?.apply(null, [actionArgs]);
+              })()
+            : undefined;
+          if (
+            $steps["updateCount"] != null &&
+            typeof $steps["updateCount"] === "object" &&
+            typeof $steps["updateCount"].then === "function"
+          ) {
+            $steps["updateCount"] = await $steps["updateCount"];
+          }
+        }}
+      >
+        {"+"}
+      </Button>
+      <Button
+        className={classNames("__wab_instance", sty.button___7U3Z6)}
+        onClick={async event => {
+          const $steps = {};
+
+          $steps["updateCount"] = true
+            ? (() => {
+                const actionArgs = {
+                  variable: {
+                    objRoot: $state,
+                    variablePath: ["count"]
+                  },
+                  operation: 3
+                };
+                return (({ variable, value, startIndex, deleteCount }) => {
+                  if (!variable) {
+                    return;
+                  }
+                  const { objRoot, variablePath } = variable;
+
+                  const oldValue = $stateGet(objRoot, variablePath);
+                  $stateSet(objRoot, variablePath, oldValue - 1);
+                  return oldValue - 1;
+                })?.apply(null, [actionArgs]);
+              })()
+            : undefined;
+          if (
+            $steps["updateCount"] != null &&
+            typeof $steps["updateCount"] === "object" &&
+            typeof $steps["updateCount"].then === "function"
+          ) {
+            $steps["updateCount"] = await $steps["updateCount"];
+          }
+        }}
+      >
+        {"-"}
+      </Button>
+      <div
+        data-plasmic-name={"text"}
+        data-plasmic-override={overrides.text}
+        className={classNames(projectcss.all, projectcss.__wab_text, sty.text)}
+      >
+        <React.Fragment>
+          {(() => {
+            try {
+              return $state.count;
+            } catch (e) {
+              if (
+                e instanceof TypeError ||
+                e?.plasmicType === "PlasmicUndefinedDataError"
+              ) {
+                return "";
+              }
+              throw e;
+            }
+          })()}
+        </React.Fragment>
+      </div>
     </div>
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root"]
+  root: ["root", "text"],
+  text: ["text"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
   (typeof PlasmicDescendants)[T][number];
 type NodeDefaultElementType = {
   root: "div";
+  text: "div";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -201,6 +322,7 @@ export const PlasmicSomeComponent = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
+    text: makeNodeComponent("text"),
 
     // Metadata about props expected for PlasmicSomeComponent
     internalVariantProps: PlasmicSomeComponent__VariantProps,

@@ -108,6 +108,24 @@ function PlasmicHomepage__RenderFunc(props: {
 
   const currentUser = useCurrentUser?.() || {};
 
+  const stateSpecs: Parameters<typeof useDollarState>[0] = React.useMemo(
+    () => [
+      {
+        path: "someComponent.count",
+        type: "private",
+        variableType: "number",
+        initFunc: ({ $props, $state, $queries, $ctx }) => 0
+      }
+    ],
+    [$props, $ctx, $refs]
+  );
+  const $state = useDollarState(stateSpecs, {
+    $props,
+    $ctx,
+    $queries: {},
+    $refs
+  });
+
   return (
     <React.Fragment>
       <div className={projectcss.plasmic_page_wrapper}>
@@ -175,6 +193,11 @@ function PlasmicHomepage__RenderFunc(props: {
             data-plasmic-name={"someComponent"}
             data-plasmic-override={overrides.someComponent}
             className={classNames("__wab_instance", sty.someComponent)}
+            count={generateStateValueProp($state, ["someComponent", "count"])}
+            onCountChange={generateStateOnChangeProp($state, [
+              "someComponent",
+              "count"
+            ])}
           />
         </div>
       </div>
