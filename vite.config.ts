@@ -2,10 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command, mode }) => ({
   plugins: [react()],
   define: {
-    'process.env.NODE_ENV': '"production"'
+    'process.env.NODE_ENV': JSON.stringify(mode),
   },
   build: {
     lib: {
@@ -28,4 +28,4 @@ export default defineConfig({
     //   },
     // },
   },
-})
+}))
