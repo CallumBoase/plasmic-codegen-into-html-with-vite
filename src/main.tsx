@@ -6,8 +6,6 @@ import { PlasmicRootProvider } from '@plasmicapp/react-web'
 import { NavigationBar } from './components/NavigationBar'
 import Homepage from './components/Homepage'
 
-
-
 const customComponents = {
   render: {
     homePage: (targetDivId: string) => {
@@ -29,4 +27,13 @@ const customComponents = {
   }
 }
 
+declare global {
+  interface Window {
+    customComponents: typeof customComponents
+  }
+}
+
+window.customComponents = customComponents;
+
 export default customComponents;
+
