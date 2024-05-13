@@ -98,6 +98,12 @@
           "name": "Fetcher",
           "displayName": "plasmic-data-source-fetcher",
           "componentImportPath": "@plasmicapp/react-web/lib/data-sources"
+        },
+        {
+          "id": "-u05CZ1k9wRO",
+          "name": "Hello",
+          "displayName": "Hello",
+          "componentImportPath": "./src/components/codeComponents/Hello"
         }
       ],
       "customFunctions": []

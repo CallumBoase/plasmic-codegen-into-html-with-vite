@@ -56,6 +56,7 @@ import {
 } from "@plasmicapp/react-web/lib/host";
 
 import Button from "../../Button"; // plasmic-import: HdFOLY6TrBds/component
+import { Hello } from "../../codeComponents/Hello"; // plasmic-import: -u05CZ1k9wRO/codeComponent
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
@@ -84,6 +85,7 @@ export const PlasmicSomeComponent__ArgProps = new Array<ArgPropType>(
 
 export type PlasmicSomeComponent__OverridesType = {
   root?: Flex__<"div">;
+  hello?: Flex__<typeof Hello>;
   text?: Flex__<"div">;
 };
 
@@ -225,33 +227,39 @@ function PlasmicSomeComponent__RenderFunc(props: {
       >
         {"-"}
       </Button>
+      <Hello
+        data-plasmic-name={"hello"}
+        data-plasmic-override={overrides.hello}
+        className={classNames("__wab_instance", sty.hello)}
+        whoToGreet={(() => {
+          try {
+            return $state.count;
+          } catch (e) {
+            if (
+              e instanceof TypeError ||
+              e?.plasmicType === "PlasmicUndefinedDataError"
+            ) {
+              return undefined;
+            }
+            throw e;
+          }
+        })()}
+      />
+
       <div
         data-plasmic-name={"text"}
         data-plasmic-override={overrides.text}
         className={classNames(projectcss.all, projectcss.__wab_text, sty.text)}
       >
-        <React.Fragment>
-          {(() => {
-            try {
-              return $state.count;
-            } catch (e) {
-              if (
-                e instanceof TypeError ||
-                e?.plasmicType === "PlasmicUndefinedDataError"
-              ) {
-                return "";
-              }
-              throw e;
-            }
-          })()}
-        </React.Fragment>
+        {"Pooppp!!!!!!"}
       </div>
     </div>
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root", "text"],
+  root: ["root", "hello", "text"],
+  hello: ["hello"],
   text: ["text"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
@@ -259,6 +267,7 @@ type DescendantsType<T extends NodeNameType> =
   (typeof PlasmicDescendants)[T][number];
 type NodeDefaultElementType = {
   root: "div";
+  hello: typeof Hello;
   text: "div";
 };
 
@@ -322,6 +331,7 @@ export const PlasmicSomeComponent = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
+    hello: makeNodeComponent("hello"),
     text: makeNodeComponent("text"),
 
     // Metadata about props expected for PlasmicSomeComponent

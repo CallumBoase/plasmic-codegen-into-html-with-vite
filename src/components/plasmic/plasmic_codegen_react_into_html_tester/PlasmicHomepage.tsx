@@ -56,6 +56,7 @@ import {
 } from "@plasmicapp/react-web/lib/host";
 
 import SomeComponent from "../../SomeComponent"; // plasmic-import: xgAR9nZqp26t/component
+import { Hello } from "../../codeComponents/Hello"; // plasmic-import: -u05CZ1k9wRO/codeComponent
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
@@ -79,6 +80,7 @@ export type PlasmicHomepage__OverridesType = {
   h1?: Flex__<"h1">;
   text?: Flex__<"div">;
   someComponent?: Flex__<typeof SomeComponent>;
+  hello?: Flex__<typeof Hello>;
 };
 
 export interface DefaultHomepageProps {
@@ -199,6 +201,13 @@ function PlasmicHomepage__RenderFunc(props: {
               "count"
             ])}
           />
+
+          <Hello
+            data-plasmic-name={"hello"}
+            data-plasmic-override={overrides.hello}
+            className={classNames("__wab_instance", sty.hello)}
+            whoToGreet={"Patty"}
+          />
         </div>
       </div>
     </React.Fragment>
@@ -206,11 +215,12 @@ function PlasmicHomepage__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ["root", "section", "h1", "text", "someComponent"],
+  root: ["root", "section", "h1", "text", "someComponent", "hello"],
   section: ["section", "h1", "text"],
   h1: ["h1"],
   text: ["text"],
-  someComponent: ["someComponent"]
+  someComponent: ["someComponent"],
+  hello: ["hello"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -221,6 +231,7 @@ type NodeDefaultElementType = {
   h1: "h1";
   text: "div";
   someComponent: typeof SomeComponent;
+  hello: typeof Hello;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -287,6 +298,7 @@ export const PlasmicHomepage = Object.assign(
     h1: makeNodeComponent("h1"),
     text: makeNodeComponent("text"),
     someComponent: makeNodeComponent("someComponent"),
+    hello: makeNodeComponent("hello"),
 
     // Metadata about props expected for PlasmicHomepage
     internalVariantProps: PlasmicHomepage__VariantProps,
