@@ -12,7 +12,10 @@
     <!-- <script type="module" src="/src/main.tsx"></script> -->
     <script type="module">
       import customComponents from "/src/main.tsx";
-      customComponents.render.homePage('target');
+      customComponents.render.homePage({
+        targetDivId: 'target',
+        useShadowDom: true,
+      })
     </script>
   </body>
 </html>

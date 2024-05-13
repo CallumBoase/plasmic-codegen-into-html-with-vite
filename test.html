@@ -13,7 +13,10 @@
     <script type="module">
       import customComponents from "/dist/customComponents.js";
       // import customComponents from "https://plasmic-codegen-into-html-with-vite.netlify.app/customComponents.js";
-      customComponents.render.homePage('navigation');
+      customComponents.render.homePage({
+        targetDivId: 'navigation',
+        useShadowDom: true,
+      });
     </script>
   </body>
 </html>
