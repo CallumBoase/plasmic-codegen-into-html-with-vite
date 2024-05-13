@@ -3,8 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="https://plasmic-codegen-into-html-with-vite.netlify.app/style.css" />
-    <!-- <link rel="stylesheet" href="/dist/style.css" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
   </head>
@@ -13,8 +11,8 @@
     <div id="navigation"></div>
     <!-- <script type="module" src="/src/main.tsx"></script> -->
     <script type="module">
-      // import customComponents from "/dist/customComponents.js";
-      import customComponents from "https://plasmic-codegen-into-html-with-vite.netlify.app/customComponents.js";
+      import customComponents from "/dist/customComponents.js";
+      // import customComponents from "https://plasmic-codegen-into-html-with-vite.netlify.app/customComponents.js";
       customComponents.render.homePage('navigation');
     </script>
   </body>
