@@ -2,8 +2,10 @@ export type HelloProps = {
   whoToGreet: string;
 }
 
+import './styles.css'
+
 export const Hello = ({whoToGreet} : HelloProps) => {
   return (
-    <div>Hello {whoToGreet}</div>
+    <div id="helloComponent">Hello {whoToGreet}</div>
   )
 }
