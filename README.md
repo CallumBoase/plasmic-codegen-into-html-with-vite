@@ -27,9 +27,12 @@ Loading the `customComponents.js` file into your HTML page will make the compone
 
 Basic setup:
 1. Clone this repo
-2. Run `npm install`
-3. Run `npm run build`
-4. Open `./test.html` in your browser (using VS code live server or directly from the file system). You should see a page with a black "Hello" `<h1>` tag and then smaller pink text "Hello Peter" below it.
+2. Update the package name in `package.json` to whatever you want
+3. Run `npm install` to install dependencies
+4. Run `npm run build` to build the project for the first time, using example components already defined
+5. Open `./test.html` in your browser (using VS code live server or directly from the file system). You should see a page with a black "Hello" `<h2>` tag and then smaller pink text "Hello Peter" below it. This means that the basic setup is working and bundling react components for rendering in plain HTML pages.
 
-Configuring Plasmic
+Configuring Plasmic: 
+1. Create a new Plasmic project
+2. 
 
