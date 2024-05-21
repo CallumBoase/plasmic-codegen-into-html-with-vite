@@ -1,3 +1,6 @@
+<!-- You can use this file to test the bundled version of your components in plain html -->
+<!-- open test.html directly in your browser or using VS Code live server mode -->
+<!-- Note: you must run `npm run build` first! -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,18 +8,25 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <script src="/dist/customComponents.js"></script>
   </head>
   <body>
     <h2>Hello</h2>
-    <div id="navigation"></div>
-    <!-- <script type="module" src="/src/main.tsx"></script> -->
-    <script type="module">
-      import customComponents from "/dist/customComponents.js";
-      // import customComponents from "https://plasmic-codegen-into-html-with-vite.netlify.app/customComponents.js";
-      customComponents.render.homePage({
-        targetDivId: 'navigation',
-        useShadowDom: true,
-      });
+    <div id="target"></div>
+    
+    <script>
+
+      // Render a non-Plasmic component like this
+      window.customComponents.render.nonPlasmicComponent({
+        targetDivId: 'target',
+        useShadowDom: false,
+      })
+
+      // You would render a Plasmic component similarly, once synced from Plasmic
+      // customComponents.render.plasmicComponentOrPage({
+      //   targetDivId: 'target',
+      //   useShadowDom: false,
+      // })
     </script>
   </body>
 </html>

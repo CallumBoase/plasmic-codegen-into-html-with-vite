@@ -4,7 +4,7 @@ export type HelloProps = {
 
 import './styles.css'
 
-export const Hello = ({whoToGreet} : HelloProps) => {
+export const HelloWorld = ({whoToGreet} : HelloProps) => {
   return (
     <div id="helloComponent">Hello {whoToGreet}</div>
   )
