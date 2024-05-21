@@ -33,6 +33,6 @@ Basic setup:
 5. Open `./test.html` in your browser (using VS code live server or directly from the file system). You should see a page with a black "Hello" `<h2>` tag and then smaller pink text "Hello Peter" below it. This means that the basic setup is working and bundling react components for rendering in plain HTML pages.
 
 Configuring Plasmic: 
-1. Create a new Plasmic project
+1. Create a new Plasmic project using Plasmic studio
 2. 
 
