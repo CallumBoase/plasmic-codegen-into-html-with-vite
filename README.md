@@ -1,30 +1,35 @@
-# React + TypeScript + Vite
+# Plasmic codegen into HTML with Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Summary
 
-Currently, two official plugins are available:
+This repo allows you to build component in Plasmic, sync their source code to the project, and bundle them for usage in plain HTML pages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The configuration in this repo allows you to register custom code components, use them in Plasmic studio and have them be part of your bundled final components, letting you use Plasmic as a component design tool for parts of Plain HTML pages, with it's full power available
 
-## Expanding the ESLint configuration
+## Why not use Plasmic's built-in methods for rendering components into HTML pages?
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Plasmic has other methods for rendering designs into html pages using javascript, however these cannot include custom code components that you've registered in Plasmic, so is not appropriate for some use-cases.
 
-- Configure the top-level `parserOptions` property like this:
+## Overview
+`./src/main.tsx` is the entry point for the Vite build.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+It imports React components and attaches them to the browser window.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+WHen you run `npm run build`, Vite (using library mode as per `vite.config.ts`) vite will:
+1. Bundle components with all necessary dependencies into a single file called `customComponents.js`
+2. Add Javascript code that inserts `<style>` tags into your HTML document's `<head>` tag with the necessary CSS imported by your components
+
+If you follow the setup instructions, the `dist` folder is auto-deployed to Netlify, so you can load it into external HTML projects easily.
+
+Loading the `customComponents.js` file into your HTML page will make the components available to use in your HTML. See `./test.html` for example of loading.
+
+## How to use
+
+Basic setup:
+1. Clone this repo
+2. Run `npm install`
+3. Run `npm run build`
+4. Open `./test.html` in your browser (using VS code live server or directly from the file system). You should see a page with a black "Hello" `<h1>` tag and then smaller pink text "Hello Peter" below it.
+
+Configuring Plasmic
+

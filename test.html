@@ -1,4 +1,6 @@
-<!-- You can use this file to test the bundled version of your components -->
+<!-- You can use this file to test the bundled version of your components in plain html -->
+<!-- open test.html directly in your browser or using VS Code live server mode -->
+<!-- Note: you must run `npm run build` first! -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,16 +8,16 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <script src="/dist/customComponents.js"></script>
   </head>
   <body>
     <h2>Hello</h2>
     <div id="target"></div>
-    <!-- <script type="module" src="/src/main.tsx"></script> -->
-    <script type="module">
-      import customComponents from "/dist/customComponents.js";
+    
+    <script>
 
       // Render a non-Plasmic component like this
-      customComponents.render.nonPlasmicComponent({
+      window.customComponents.render.nonPlasmicComponent({
         targetDivId: 'target',
         useShadowDom: false,
       })

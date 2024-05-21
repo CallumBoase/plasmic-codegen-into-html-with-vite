@@ -61,5 +61,4 @@ const customComponents = {
 window.customComponents = customComponents;
 
 //Export customComponents in case wanting to use in an import in script type="module" instead of via window.customComponents
-export default customComponents;
-
+// export default customComponents;
