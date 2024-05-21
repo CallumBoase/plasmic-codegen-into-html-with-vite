@@ -1,5 +1,5 @@
 <!-- This file is the entry point for you vite app, and what is rendered when you run your dev server -->
-<!-- Whatever you import here will be bundlded into dist as per vite.config.ts -->
+<!-- Whatever you import (<script> tag and similar) will be seen by vite and bundled into dist -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,10 +14,19 @@
     <!-- <script type="module" src="/src/main.tsx"></script> -->
     <script type="module">
       import customComponents from "/src/main.tsx";
-      customComponents.render.homePage({
+
+      // Render a non-Plasmic component like this
+      customComponents.render.nonPlasmicComponent({
         targetDivId: 'target',
-        useShadowDom: true,
+        useShadowDom: false,
       })
+
+      // You would render a Plasmic component similarly, once synced from Plasmic
+      // customComponents.render.plasmicComponent({
+      //   targetDivId: 'target',
+      //   useShadowDom: false,
+      // })
+      
     </script>
   </body>
 </html>

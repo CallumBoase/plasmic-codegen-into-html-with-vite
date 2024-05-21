@@ -1,3 +1,4 @@
+<!-- You can use this file to test the bundled version of your components -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,15 +9,22 @@
   </head>
   <body>
     <h2>Hello</h2>
-    <div id="navigation"></div>
+    <div id="target"></div>
     <!-- <script type="module" src="/src/main.tsx"></script> -->
     <script type="module">
       import customComponents from "/dist/customComponents.js";
-      // import customComponents from "https://plasmic-codegen-into-html-with-vite.netlify.app/customComponents.js";
-      customComponents.render.homePage({
-        targetDivId: 'navigation',
-        useShadowDom: true,
-      });
+
+      // Render a non-Plasmic component like this
+      customComponents.render.nonPlasmicComponent({
+        targetDivId: 'target',
+        useShadowDom: false,
+      })
+
+      // You would render a Plasmic component similarly, once synced from Plasmic
+      // customComponents.render.plasmicComponent({
+      //   targetDivId: 'target',
+      //   useShadowDom: false,
+      // })
     </script>
   </body>
 </html>

@@ -1,9 +1,9 @@
 import { HelloProps } from ".";
 import { CodeComponentMeta } from "@plasmicapp/host";
 
-export const helloMeta: CodeComponentMeta<HelloProps> = {
-  name: "Hello",
-  importPath: './src/components/codeComponents/Hello',
+export const helloWorldMeta: CodeComponentMeta<HelloProps> = {
+  name: "HelloWorld",
+  importPath: './src/components/codeComponents/HelloWorld',
   props: {
     whoToGreet: {
       type: "string",
