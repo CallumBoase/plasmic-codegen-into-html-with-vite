@@ -83,8 +83,8 @@ This is only required if you want to register custom code components for use in 
    * Open `test.html` in the browser (direct from filesystem or using VS Code live server). If your component loads into that html page, it works!
 
 ### Configuring Netlify deployment
-1. Make sure this project is deploying to a github repo
-2. Create a new Netlify site and connect it to your gitub repo. Because of the configuration in `netlify.toml` it should automatically deploy the `dist` folder to Netlify every time you push to the main branch of github
+1. Make sure this project is connected and being pushed to a github.com repo
+2. Create a new Netlify site and connect it to your gitub repo. Because of the configuration in `./netlify.toml` Netlify should automatically deploy the `dist` folder to Netlify every time you push update sto the main branch of your github repo
 
 ### Deployment
 1. Ensure the Netlify setup above is completed
