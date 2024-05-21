@@ -12,7 +12,7 @@ import { PlasmicRootProvider } from '@plasmicapp/react-web'
 import { getRenderTarget } from './utils/getRenderTarget'
 
 //Import your components
-// import { HomePage } from './components/HomePage'; //Example of importing a Plasmic component once synced
+//import Homepage from './components/Homepage' //Example of importing a Plasmic component once synced
 import { HelloWorld } from './components/codeComponents/HelloWorld'; // Example import of non-plasmic component directly
 
 //Extend the window object to allow for adding window.customComponents
@@ -36,7 +36,7 @@ const customComponents = {
       ReactDOM.createRoot(renderTarget).render(
         <React.StrictMode>
           <PlasmicRootProvider>
-            {/* <HomePage /> - Your plasmic component or page would go here */}
+            {/* <Homepage /> //Your plasmic component or page would go here */}
           </ PlasmicRootProvider>
         </React.StrictMode>,
       )
@@ -59,6 +59,3 @@ const customComponents = {
 
 //Add customComponents to the window object
 window.customComponents = customComponents;
-
-//Export customComponents in case wanting to use in an import in script type="module" instead of via window.customComponents
-// export default customComponents;
