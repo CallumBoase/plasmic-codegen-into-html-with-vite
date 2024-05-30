@@ -4,34 +4,41 @@
 //when the <style> element id is 'custom-component-styles' (<style> elements inserted by the dist version of this repo)
 //Or when the <style> element has 'data-vite-dev-id' attribute (<style> elements inserted by the dev version of this repo when running npm run dev)
 
-export function setupShadowDOM(targetElement : HTMLElement) {
-
+export function setupShadowDOM(targetElement: HTMLElement) {
   let shadowRoot = targetElement.shadowRoot;
 
   if (!shadowRoot) {
     shadowRoot = targetElement.attachShadow({ mode: 'open' });
   }
-  
+
   // Use a specific container within the shadow DOM for React rendering
   let shadowContainer = shadowRoot.querySelector('#shadow-container');
-  
+
   if (!shadowContainer) {
     shadowContainer = document.createElement('div');
     shadowContainer.id = 'shadow-container';
     shadowRoot.appendChild(shadowContainer);
 
-    //Apply styling from the main document to the shadow DOM when appropriate
-    //When the style was created by vite (in dev mode or dist mode) or by Ant cssinjs (used by antd design components in Plasmic)
+    // move styling from main document to shadow dom (ones that exist at the time of setup)
     moveStylesToShadowDom(shadowRoot);
 
-    //When the document is ready, do again
-    //Since ant cssinjs injected styles aren't ready when we first run this
-    document.addEventListener('DOMContentLoaded', function () {
-      moveStylesToShadowDom(shadowRoot);
-    });
-
+    // Setup observer for dynamically inserted styles that may be inserted by cssinjs solutions later
+    setupStyleObserver(shadowRoot);
   }
-  return shadowContainer; // Return the shadow container as the new render target
+
+  return shadowContainer;
+}
+
+function setupStyleObserver(shadowRoot: ShadowRoot) {
+  const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        moveStylesToShadowDom(shadowRoot);
+      }
+    }
+  });
+
+  observer.observe(document.head, { childList: true, subtree: true });
 }
 
 export function moveStylesToShadowDom(shadowRoot: ShadowRoot) {
@@ -39,7 +46,7 @@ export function moveStylesToShadowDom(shadowRoot: ShadowRoot) {
   // Since the shadow dom is isolated from the main document, we need to copy over the styles
   const allStyleElements = document.querySelectorAll('head style');
   const styleElementsToClone = Array.from(allStyleElements)
-    .filter(el => isViteDevModeTag(el) || isStyleTagCreatedByViteCssInjectedByJsPlugin(el) || isStyleTagCreatedByAntCssinjs(el));
+    .filter(el => isViteDevModeTag(el) || isStyleTagCreatedByViteCssinjs(el) || isStyleTagCreatedByAntCssinjs(el));
 
   styleElementsToClone.forEach(originalStyleElement => {
     const clonedStyleElement = originalStyleElement.cloneNode(true);
@@ -50,29 +57,28 @@ export function moveStylesToShadowDom(shadowRoot: ShadowRoot) {
 }
 
 function isViteDevModeTag(styleElement: Element) {
-  //When using Vite in dev mode it sometimes inserts style tags with a 'data-vite-dev-id' attribute
-  //We can check for this attribute to determine if the style tag was created by Vite in dev mode
+  // When using Vite in dev mode it sometimes inserts style tags with a 'data-vite-dev-id' attribute
+  // We can check for this attribute to determine if the style tag was created by Vite in dev mode
   return styleElement.getAttribute('data-vite-dev-id') !== null;
 }
 
-function isStyleTagCreatedByViteCssInjectedByJsPlugin(styleElement: Element) {
-  //We configure vite to inject all imported .css and .module.css files as a <style> tag with id 'custom-component-styles'
-  //So we can check for this id to determine if the <style> tag was created by us (via Vite)
-  return styleElement.id === 'custom-component-styles' || styleElement.getAttribute('data-vite-dev-id');
+function isStyleTagCreatedByViteCssinjs(styleElement: Element) {
+  // We configure vite to inject all imported .css and .module.css files as a <style> tag with id 'custom-component-styles'
+  // So we can check for this id to determine if the <style> tag was created by us (via Vite)
+  return styleElement.id === 'custom-component-styles' || styleElement.getAttribute('data-vite-dev-id') !== null;
 }
 
 function isStyleTagCreatedByAntCssinjs(styleElement: Element) {
-
-  //Plasmic seems to allow Ant to create <style> tags in the dom using cssinjs https://github.com/ant-design/cssinjs/tree/57dbfefc94baecba1708ad3fef83756938acc6a2
-  //These <style> tags have some predictable attributes, some of which have predictable values
-  //We therefore check for these attributes to determine if the <style> tag was created by Ant cssinjs
-  //So we can copy them over
+  // Plasmic seems to allow Ant to create <style> tags in the dom using cssinjs
+  // These <style> tags have some predictable attributes, some of which have predictable values
+  // We therefore check for these attributes to determine if the <style> tag was created by Ant cssinjs
+  // So we can copy them over
 
   const isAntCssinjsTag = (
     styleElement.attributes.getNamedItem('data-rc-order')?.value === 'prependQueue' &&
     styleElement.attributes.getNamedItem('data-css-hash') !== null &&
     styleElement.attributes.getNamedItem('data-token-hash') !== null
-  )
+  );
 
   return isAntCssinjsTag;
 }
