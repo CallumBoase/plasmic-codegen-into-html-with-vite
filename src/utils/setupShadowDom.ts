@@ -49,11 +49,26 @@ export function moveStylesToShadowDom(shadowRoot: ShadowRoot) {
     .filter(el => isViteDevModeTag(el) || isStyleTagCreatedByViteCssinjs(el) || isStyleTagCreatedByAntCssinjs(el));
 
   styleElementsToClone.forEach(originalStyleElement => {
-    const clonedStyleElement = originalStyleElement.cloneNode(true);
-    shadowRoot.prepend(clonedStyleElement);
-    // Remove from the main document now that it's copied to the shadow dom
-    originalStyleElement.parentNode?.removeChild(originalStyleElement);
+
+    // Check if an identical style tag already exists in the shadow dom
+    if (checkIfIdenticalTagExistsInShadowDom(shadowRoot, originalStyleElement)) {
+      // If it does, we don't need to copy this style tag over
+      return;
+    } else {
+      //It doesn't yet exist, so copy it over
+      //Clone the element and append it to the shadow dom
+      const clonedStyleElement = originalStyleElement.cloneNode(true);
+      shadowRoot.prepend(clonedStyleElement);
+    }
   });
+}
+
+function checkIfIdenticalTagExistsInShadowDom(shadowRoot: ShadowRoot, styleElement: Element) {
+  //Check for existence of identical style tag in shadow dom already by id or (if no id) the inner content
+  const existingStyleElement = 
+    styleElement.id && shadowRoot.querySelector(`style#${styleElement.id}`) || 
+    Array.from(shadowRoot.querySelectorAll('style')).find(el => el.innerHTML === styleElement.innerHTML);
+  return existingStyleElement ? true : false;
 }
 
 function isViteDevModeTag(styleElement: Element) {
